@@ -311,30 +311,25 @@
             <div class="card shadow-sm border-0 p-3">
                 <div class="d-flex align-items-center mb-2">
                     <div class="icon-box bg-warning-subtle text-warning me-2 mb-0" style="width:40px; height:40px; font-size:1.1rem;">
-                        <i class="bi bi-tools"></i>
+                        <i class="bi bi-cpu"></i>
                     </div>
                     <div>
-                        <h6 class="fw-bold mb-0">Copiloto Industrial</h6>
-                        <small class="text-muted" style="font-size: 0.7rem;">Suscripción VIP (19,99 €/mes)</small>
+                        <h6 class="fw-bold mb-0">Copiloto IA - Asistente Técnico</h6>
+                        <small class="text-muted" style="font-size: 0.7rem;">Normativa REBT y Diagnóstico de Averías</small>
                     </div>
                 </div>
-                <p class="small text-muted mb-2">Diagnóstico de códigos de error para PLCs y variadores de frecuencia (Siemens, ABB, Schneider, Omron).</p>
+                <p class="small text-muted mb-3">Consulta dudas sobre normativas, esquemas eléctricos o códigos de error en PLCs y variadores.</p>
+                
                 <div class="mb-2">
-                    <label class="form-label fw-semibold small">Marca del Equipo</label>
-                    <select class="form-select form-select-sm" id="copilotoMarca">
-                        <option>Siemens</option>
-                        <option>ABB</option>
-                        <option>Schneider Electric</option>
-                        <option>Omron</option>
-                    </select>
+                    <label class="form-label fw-semibold small">Escribe tu consulta o código de error:</label>
+                    <textarea class="form-control form-control-sm" id="userQuestion" rows="3" placeholder="Ej: ¿Qué sección de cable necesito para una línea de fuerza de 25A o error F0022 en variador ABB?"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold small">Código de Error / Alarma</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Ej: F0022">
-                </div>
-                <button class="btn btn-warning w-100 fw-bold btn-sm py-2 text-dark" onclick="alert('Copiloto activado. (Función preparada para conectar API de IA real cuando decidas activarla).')">
-                    <i class="bi bi-cpu"></i> Diagnosticar Avería (VIP)
+
+                <button type="button" class="btn btn-warning w-100 fw-bold btn-sm py-2 text-dark mb-3" onclick="consultarIA()">
+                    <i class="bi bi-cpu"></i> Consultar al Copiloto IA
                 </button>
+
+                <div id="iaResponse" class="p-3 bg-light border rounded small d-none" style="white-space: pre-wrap; line-height: 1.4; max-height: 250px; overflow-y: auto;"></div>
             </div>
         </section>
 
@@ -550,6 +545,54 @@
             document.getElementById('firma-impresa').classList.remove('d-none');
 
             window.print();
+        }
+
+        // Función de Integración de la Inteligencia Artificial (Gemini)
+        async function consultarIA() {
+            const pregunta = document.getElementById("userQuestion").value.trim();
+            const cajaRespuesta = document.getElementById("iaResponse");
+            
+            if (!pregunta) {
+                cajaRespuesta.classList.remove('d-none');
+                cajaRespuesta.innerHTML = "⚠️ Por favor, escribe una duda o consulta técnica.";
+                return;
+            }
+
+            cajaRespuesta.classList.remove('d-none');
+            cajaRespuesta.innerHTML = "⏳ Consultando al asistente técnico...";
+
+            const apiKey = "AQ.Ab8RN6JjNi-uN3ly5pBzVl-P6o6CqIU2WPlsPDfwx7oI6k1YUA"; 
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+            const promptSistema = "Eres un asistente experto en electricidad, normativas electrotécnicas REBT, esquemas unifilares y reglamentos de baja tensión. Responde de forma profesional, clara, directa y útil para electricistas profesionales.";
+            
+            const data = {
+                contents: [
+                    { role: "user", parts: [{ text: promptSistema + "\n\nPregunta del usuario: " + pregunta }] }
+                ]
+            };
+
+            try {
+                const respuesta = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const resultado = await respuesta.json();
+                
+                if (resultado.candidates && resultado.candidates[0].content) {
+                    const textoIA = resultado.candidates[0].content.parts[0].text;
+                    cajaRespuesta.innerHTML = textoIA;
+                } else if (resultado.error) {
+                    cajaRespuesta.innerHTML = "❌ Error de la API: " + (resultado.error.message || "Revisa los datos.");
+                } else {
+                    cajaRespuesta.innerHTML = "Hubo un error al procesar la respuesta.";
+                }
+            } catch (error) {
+                cajaRespuesta.innerHTML = "❌ Error de conexión con la IA.";
+                console.error(error);
+            }
         }
     </script>
 </body>

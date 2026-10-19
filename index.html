@@ -76,7 +76,7 @@
             right: 0;
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
-            z-index: 1000;
+            z-index: 1050;
         }
         .nav-bottom .nav-link {
             color: #64748b;
@@ -89,6 +89,27 @@
             color: var(--bs-primary);
             font-weight: 600;
         }
+        .badge-quick {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .badge-quick:hover {
+            background-color: #fbbf24 !important;
+            color: #000 !important;
+        }
+        .modern-selector {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .modern-selector:hover {
+            border-color: var(--bs-primary);
+            background-color: #f8fafc;
+        }
         #signature-pad {
             border: 2px dashed #cbd5e1;
             background-color: #ffffff;
@@ -96,6 +117,7 @@
             cursor: crosshair;
             width: 100%;
             height: 120px;
+            touch-action: none;
         }
         @media print {
             .no-print { display: none !important; }
@@ -108,13 +130,21 @@
 </head>
 <body>
 
-    <header class="header-hero text-center mb-3 no-print">
+    <header class="header-hero text-center mb-3 no-print position-relative">
+        <div style="position: absolute; top: 12px; right: 15px;">
+            <select class="form-select form-select-sm bg-dark text-white border-secondary" id="selectIdioma" onchange="cambiarIdioma(this.value)" style="font-size: 0.65rem; width: auto;">
+                <option value="es">🇪🇸 ES</option>
+                <option value="en">🇬🇧 EN</option>
+                <option value="fr">🇫🇷 FR</option>
+            </select>
+        </div>
+
         <div class="container max-w-lg">
             <span class="badge bg-warning text-dark mb-1 px-3 py-1 rounded-pill fw-bold" style="font-size: 0.65rem;">
-                <i class="bi bi-shield-check"></i> REBT Pro 2026 - Precios PVP Mercado
+                <i class="bi bi-shield-check"></i> <span data-i18n="badge_rebt">REBT Pro 2026 - Edición Única Campo</span>
             </span>
             <h1 class="h4 fw-extrabold mb-1"><i class="bi bi-lightning-charge-fill text-warning"></i> Electricista en el Bolsillo</h1>
-            <p class="small text-light opacity-75 mb-0" style="font-size: 0.78rem;">Presupuestos Editables PVP, Cálculo de Secciones y Librería Total de Averías.</p>
+            <p class="small text-light opacity-75 mb-0" style="font-size: 0.78rem;" data-i18n="subtitle">Presupuestos Flash con Selectores Pro, IVA B2B y Librería Total REBT.</p>
         </div>
     </header>
 
@@ -123,49 +153,49 @@
         <!-- Menú Principal -->
         <section class="row g-2 mb-3 no-print" id="menu-principal">
             <div class="col-4">
-                <div class="card card-menu p-2 text-center active" id="btn-presupuesto" onclick="switchSection('presupuesto')">
+                <div class="card card-menu p-2 text-center active" id="card-presupuesto" onclick="switchSection('presupuesto')">
                     <div class="icon-box bg-primary-subtle text-primary">
                         <i class="bi bi-calculator"></i>
                     </div>
-                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;">Presupuesto</h6>
+                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;" data-i18n="menu_presupuesto">Presupuesto</h6>
                     <small class="text-muted" style="font-size: 0.58rem;">PVP 2026</small>
                 </div>
             </div>
             <div class="col-4">
-                <div class="card card-menu p-2 text-center" id="btn-calculadora" onclick="switchSection('calculadora')">
+                <div class="card card-menu p-2 text-center" id="card-calculadora" onclick="switchSection('calculadora')">
                     <div class="icon-box bg-info-subtle text-info">
                         <i class="bi bi-sliders"></i>
                     </div>
-                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;">Calculadora</h6>
+                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;" data-i18n="menu_calculadora">Calculadora</h6>
                     <small class="text-muted" style="font-size: 0.58rem;">Secciones</small>
                 </div>
             </div>
             <div class="col-4">
-                <div class="card card-menu p-2 text-center" id="btn-copiloto" onclick="switchSection('copiloto')">
+                <div class="card card-menu p-2 text-center" id="card-copiloto" onclick="switchSection('copiloto')">
                     <span class="position-absolute top-0 end-0 badge badge-vip m-1 rounded-pill">PRO</span>
                     <div class="icon-box bg-warning-subtle text-warning">
                         <i class="bi bi-cpu"></i>
                     </div>
-                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;">Copiloto REBT</h6>
-                    <small class="text-muted" style="font-size: 0.58rem;">Librería Total</small>
+                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;" data-i18n="menu_copiloto">Copiloto REBT</h6>
+                    <small class="text-muted" style="font-size: 0.58rem;">Averías Total</small>
                 </div>
             </div>
             <div class="col-4">
-                <div class="card card-menu p-2 text-center" id="btn-escaner" onclick="switchSection('escaner')">
+                <div class="card card-menu p-2 text-center" id="card-escaner" onclick="switchSection('escaner')">
                     <div class="icon-box bg-success-subtle text-success">
                         <i class="bi bi-camera"></i>
                     </div>
-                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;">Escáner</h6>
+                    <h6 class="fw-bold mb-0" style="font-size: 0.78rem;" data-i18n="menu_escaner">Escáner</h6>
                     <small class="text-muted" style="font-size: 0.58rem;">Cuadros IA</small>
                 </div>
             </div>
             <div class="col-8">
-                <div class="card card-menu p-2 text-center d-flex flex-row align-items-center justify-content-center gap-2" id="btn-historial" onclick="switchSection('historial')">
+                <div class="card card-menu p-2 text-center d-flex flex-row align-items-center justify-content-center gap-2" id="card-historial" onclick="switchSection('historial')">
                     <div class="icon-box bg-secondary-subtle text-secondary mb-0" style="width: 36px; height: 36px; font-size: 1.05rem;">
                         <i class="bi bi-folder2-open"></i>
                     </div>
                     <div class="text-start">
-                        <h6 class="fw-bold mb-0" style="font-size: 0.78rem;">Historial de Trabajos</h6>
+                        <h6 class="fw-bold mb-0" style="font-size: 0.78rem;" data-i18n="menu_historial">Historial de Trabajos</h6>
                         <small class="text-muted" style="font-size: 0.58rem;">Presupuestos guardados</small>
                     </div>
                 </div>
@@ -175,37 +205,61 @@
         <!-- Sección Presupuestos -->
         <section id="sec-presupuesto" class="app-sec">
             <div class="card shadow-sm border-0 p-3 mb-3 no-print">
-                <h5 class="fw-bold mb-2 text-dark fs-6"><i class="bi bi-plus-circle-fill text-primary"></i> Generador Profesional PVP REBT</h5>
-                <p class="small text-muted mb-3" style="font-size: 0.75rem;">Genera el presupuesto exacto según los materiales y horas reales indicados. Podrás añadir o eliminar partidas libremente.</p>
+                <h5 class="fw-bold mb-2 text-dark fs-6"><i class="bi bi-plus-circle-fill text-primary"></i> Generador Profesional PVP REBT 2026</h5>
+                <p class="small text-muted mb-3" style="font-size: 0.75rem;">Usa los selectores o escribe el trabajo (ejemplo: "10 enchufes"). Las cantidades y horas se calculan de forma inteligente.</p>
                 <form id="form-calc">
                     <div class="mb-2">
                         <label class="form-label fw-semibold small">Tipo de Inmueble / Instalación</label>
                         <select class="form-select form-select-sm" id="tipoInmueble">
-                            <option value="cuadro">Sustitución / Montaje de Cuadro Eléctrico</option>
                             <option value="vivienda">Reforma Integral / Parcial de Vivienda</option>
+                            <option value="cuadro">Sustitución / Montaje de Cuadro Eléctrico</option>
                             <option value="local">Local Comercial / Pública Concurrencia (ITC-BT-28)</option>
                             <option value="averia">Avería / Reparación / Mantenimiento de Urgencia</option>
                             <option value="vehiculo">Punto de Carga Vehículo Eléctrico (ITC-BT-52)</option>
                             <option value="fotovoltaica">Instalación Solar Fotovoltaica / Autoconsumo</option>
-                            <option value="iluminacion">Cuadro de Automatismos / Cuadro de Control / LED</option>
+                            <option value="iluminacion">Cuadro de Automatismos / Control / LED</option>
                         </select>
                     </div>
+
+                    <!-- Selector Pro Moderno para Partidas Rápidas -->
                     <div class="mb-2">
-                        <label class="form-label fw-semibold small">Materiales y descripción del trabajo</label>
-                        <textarea class="form-control form-control-sm" id="solicitudUsuario" rows="3" placeholder="Ej: 1 IGA 40A, 2 Diferenciales 40A 30mA, 5 Magnetotérmicos, 100m cable 2.5mm²..."></textarea>
+                        <label class="form-label fw-semibold small">Selección Rápida de Partidas (Catálogo PVP 2026)</label>
+                        <div class="dropdown">
+                            <div class="modern-selector d-flex justify-content-between align-items-center text-primary fw-semibold" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                <span id="txtDropdownPartida"><i class="bi bi-lightning-fill me-1"></i> -- Seleccionar partida del catálogo --</span>
+                                <i class="bi bi-chevron-down text-muted"></i>
+                            </div>
+                            <ul class="dropdown-menu w-100 shadow p-2 border-0 rounded-3" style="font-size: 0.78rem;">
+                                <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarPartidaPro('Sustitución de 10 enchufes o interruptores universales', '🔌 Sustitución de 10 Enchufes / Mecanismos')">🔌 Sustitución de 10 Enchufes / Mecanismos</a></li>
+                                <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarPartidaPro('1 IGA 40A, 2 Diferenciales 40A 30mA, 5 Magnetotérmicos, 1 Protector sobretensiones', '⚡ Kit Completo Cuadro Monofásico')">⚡ Kit Completo Cuadro Monofásico (IGA + Diferencial + PIAs + Sobretensiones)</a></li>
+                                <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarPartidaPro('1 Rollo Cable H07Z1-K 2.5mm2, 1 Rollo Cable H07Z1-K 1.5mm2 y tubo corrugado', '📏 Línea de Cableado y Tubo Corrugado')">📏 Línea de Cableado y Tubo Corrugado Libres de Halógenos</a></li>
+                                <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarPartidaPro('Detección de avería urgente, comprobación de aislamientos y mano de obra', '🛠️ Reparación de Avería Urgente')">🛠️ Reparación de Avería Eléctrica de Urgencia</a></li>
+                                <li><a class="dropdown-item rounded py-2" href="#" onclick="seleccionarPartidaPro('Instalación de Punto de Carga Vehículo Eléctrico Modo 3 con manguera y protección dedicada', '🚗 Punto de Carga V.E.')">🚗 Punto de Carga V.E. (ITC-BT-52)</a></li>
+                            </ul>
+                        </div>
                     </div>
+
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold small">Descripción detallada de materiales y trabajos</label>
+                        <textarea class="form-control form-control-sm" id="solicitudUsuario" rows="3" placeholder="Ejemplo: Sustitución de 10 enchufes..."></textarea>
+                    </div>
+
                     <div class="row g-2 mb-3">
                         <div class="col-4">
                             <label class="form-label fw-semibold small">Horas Trabajo</label>
-                            <input type="number" step="0.5" class="form-control form-control-sm" id="horasTrabajo" value="3.5">
+                            <input type="number" step="0.5" class="form-control form-control-sm" id="horasTrabajo" value="2.0">
                         </div>
                         <div class="col-4">
                             <label class="form-label fw-semibold small">Tarifa (€/h)</label>
                             <input type="number" class="form-control form-control-sm" id="tarifaHora" value="40">
                         </div>
                         <div class="col-4">
-                            <label class="form-label fw-semibold small">IVA (%)</label>
-                            <input type="number" class="form-control form-control-sm" id="porcentajeIva" value="21">
+                            <label class="form-label fw-semibold small">Régimen IVA</label>
+                            <select class="form-select form-select-sm" id="porcentajeIva">
+                                <option value="21">21% General</option>
+                                <option value="10">10% Reducido</option>
+                                <option value="0">0% (Inversión Sujeto Pasivo / B2B)</option>
+                            </select>
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary w-100 fw-bold py-2" onclick="generarPresupuestoProfesional()">
@@ -268,6 +322,12 @@
                     </div>
                 </div>
 
+                <div class="no-print mb-3">
+                    <button type="button" class="btn btn-success btn-sm w-100 fw-bold py-2" onclick="copiarPresupuestoWhatsApp()">
+                        <i class="bi bi-whatsapp"></i> Copiar Importe Flash para WhatsApp
+                    </button>
+                </div>
+
                 <div class="card bg-light border p-2 mb-3 no-print">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <label class="form-label fw-bold small mb-0"><i class="bi bi-pen"></i> Firma del Cliente (Conformidad):</label>
@@ -282,11 +342,11 @@
                 </div>
 
                 <div class="alert alert-warning py-1 mb-2" style="font-size: 0.7rem;">
-                    <i class="bi bi-exclamation-triangle-fill"></i> Validez 30 días. Precios PVP de mercado actualizados. Sujeto a ITC-BT del REBT vigente.
+                    <i class="bi bi-exclamation-triangle-fill"></i> Validez 30 días. Precios PVP de mercado actualizados 2026. Sujeto a ITC-BT del REBT vigente.
                 </div>
 
                 <div class="d-grid gap-2 no-print">
-                    <button class="btn btn-success btn-sm fw-bold py-2" onclick="guardarEnHistorial()">
+                    <button class="btn btn-dark btn-sm fw-bold py-2" onclick="guardarEnHistorial()">
                         <i class="bi bi-save"></i> Guardar en mi Historial Local
                     </button>
                     <button class="btn btn-outline-dark btn-sm fw-bold py-2" onclick="prepararImpresionPDF()">
@@ -300,7 +360,26 @@
         <section id="sec-calculadora" class="app-sec d-none">
             <div class="card shadow-sm border-0 p-3 mb-3">
                 <h5 class="fw-bold mb-2 text-info fs-6"><i class="bi bi-sliders"></i> Calculadora Técnica de Secciones REBT</h5>
-                <p class="small text-muted mb-3" style="font-size: 0.75rem;">Cálculo riguroso de sección de conductores de cobre según caída de tensión admisible (ITC-BT-19 / ITC-BT-25).</p>
+                <p class="small text-muted mb-3" style="font-size: 0.75rem;">Selecciona el circuito normalizado mediante el selector pro o introduce los datos manualmente.</p>
+                
+                <div class="mb-2">
+                    <label class="form-label fw-semibold small">Selección Rápida de Circuito ITC-BT-25</label>
+                    <div class="dropdown">
+                        <div class="modern-selector d-flex justify-content-between align-items-center text-info fw-semibold" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                            <span id="txtDropdownCircuito"><i class="bi bi-sliders me-1"></i> -- Seleccionar circuito normalizado REBT --</span>
+                            <i class="bi bi-chevron-down text-muted"></i>
+                        </div>
+                        <ul class="dropdown-menu w-100 shadow p-2 border-0 rounded-3" style="font-size: 0.78rem;">
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarCircuitoPro('3.68|15|monofasico', '💡 C1 - Iluminación (3.68 kW máx)')">💡 C1 - Iluminación (3.68 kW máx)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarCircuitoPro('5.75|20|monofasico', '🔌 C2 - Enchufes de uso general (5.75 kW)')">🔌 C2 - Enchufes de uso general (5.75 kW)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarCircuitoPro('9.2|15|monofasico', '🔥 C3 - Cocina y Horno (9.2 kW)')">🔥 C3 - Cocina y Horno (9.2 kW)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarCircuitoPro('5.75|15|monofasico', '🌊 C4 - Lavadora, Lavavajillas y Termo')">🌊 C4 - Lavadora, Lavavajillas y Termo (5.75 kW)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarCircuitoPro('3.68|25|monofasico', '🛁 C5 - Baño y Cocina auxiliares')">🛁 C5 - Baño y Cocina auxiliares (3.68 kW)</a></li>
+                            <li><a class="dropdown-item rounded py-2" href="#" onclick="seleccionarCircuitoPro('7.36|20|monofasico', '🚗 Punto de Carga V.E. - ITC-BT-52')">🚗 Punto de Carga V.E. - ITC-BT-52 (7.36 kW)</a></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="mb-2">
                     <label class="form-label fw-semibold small">Potencia de diseño (kW)</label>
                     <input type="number" class="form-control form-control-sm" id="calcPotencia" placeholder="Ej: 5.75 o 9.2">
@@ -310,7 +389,7 @@
                     <input type="number" class="form-control form-control-sm" id="calcLongitud" placeholder="Ej: 20">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold small">Tipo de Circuito / ITC</label>
+                    <label class="form-label fw-semibold small">Tipo de Suministro</label>
                     <select class="form-select form-select-sm" id="calcTipoCircuito">
                         <option value="monofasico">Monofásico 230V (Viviendas / Locales)</option>
                         <option value="trifasico">Trifásico 400V (Industrial / Motores)</option>
@@ -326,7 +405,7 @@
             </div>
         </section>
 
-        <!-- Sección Copiloto IA Local Avanzado -->
+        <!-- Sección Copiloto -->
         <section id="sec-copiloto" class="app-sec d-none">
             <div class="card shadow-sm border-0 p-3">
                 <div class="d-flex align-items-center mb-2">
@@ -335,13 +414,69 @@
                     </div>
                     <div>
                         <h6 class="fw-bold mb-0">Copiloto Inteligente REBT y Averías</h6>
-                        <small class="text-muted" style="font-size: 0.68rem;">Librería total de campo: cortocircuitos, saltos, caídas, motores y luces</small>
+                        <small class="text-muted" style="font-size: 0.68rem;">Librería total de campo con menús desplegables pro</small>
                     </div>
                 </div>
-                <p class="small text-muted mb-2" style="font-size: 0.74rem;">Pregunta cualquier síntoma o duda (ej: <em>salta el térmico</em>, <em>sin luz en enchufes</em>, <em>olor a quemado</em>, <em>motor zumba</em>)...</p>
+                <p class="small text-muted mb-2" style="font-size: 0.74rem;">Selecciona una incidencia en los selectores desplegables modernos:</p>
                 
                 <div class="mb-2">
-                    <textarea class="form-control form-control-sm" id="userQuestion" rows="3" placeholder="Ej: Salta el térmico / Sin corriente en cocina / Olor a quemado / Motor trifásico zumba / Luz parpadea..."></textarea>
+                    <label class="form-label fw-semibold text-danger mb-1" style="font-size: 0.7rem;">⚡ 1. Cuadros y Protecciones (Saltos y Cortos)</label>
+                    <div class="dropdown">
+                        <div class="modern-selector d-flex justify-content-between align-items-center text-dark fw-semibold border-danger" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                            <span id="txtDropdownAveria1">-- Seleccionar avería de cuadro / protecciones --</span>
+                            <i class="bi bi-chevron-down text-muted"></i>
+                        </div>
+                        <ul class="dropdown-menu w-100 shadow p-2 border-0 rounded-3" style="font-size: 0.78rem;">
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('diferencial', '⚡ Salta intempestivo de Interruptor Diferencial')">⚡ Salta intempestivo de Interruptor Diferencial (Fuga a tierra / humedad)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('magnetotermico', '🔌 Salto de Magnetotérmico / Térmico')">🔌 Salto de Magnetotérmico / Térmico (Cortocircuito o sobrecarga)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('quemado', '🔥 Olor a quemado o chispas')">🔥 Olor a quemado, chispas o bornas calientes (Efecto Joule)</a></li>
+                            <li><a class="dropdown-item rounded py-2" href="#" onclick="seleccionarAveriaPro('sobretensiones', '🛡️ Ausencia de sobretensiones')">🛡️ Ausencia de protector contra sobretensiones (ITC-BT-23)</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label fw-semibold text-primary mb-1" style="font-size: 0.7rem;">🔌 2. Instalación Interior y Enchufes</label>
+                    <div class="dropdown">
+                        <div class="modern-selector d-flex justify-content-between align-items-center text-dark fw-semibold border-primary" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                            <span id="txtDropdownAveria2">-- Seleccionar incidencia en circuitos --</span>
+                            <i class="bi bi-chevron-down text-muted"></i>
+                        </div>
+                        <ul class="dropdown-menu w-100 shadow p-2 border-0 rounded-3" style="font-size: 0.78rem;">
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('sin corriente', '💡 Falta de corriente eléctrica')">💡 Falta de corriente eléctrica en toma o estancia</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('caida de tension', '📉 Caída de tensión excesiva')">📉 Caída de tensión excesiva en línea alejada (>3% / >5%)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('tierra', '🌍 Falta de continuidad de tierra')">🌍 Falta de continuidad o resistencia alta en toma de tierra</a></li>
+                            <li><a class="dropdown-item rounded py-2" href="#" onclick="seleccionarAveriaPro('seccion de cable insuficiente', '📏 Sección de cable insuficiente')">📏 Sección de cable insuficiente para la carga conectada</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label fw-semibold text-success mb-1" style="font-size: 0.7rem;">⚙️ 3. Motores, Iluminación y Cargas Especiales</label>
+                    <div class="dropdown">
+                        <div class="modern-selector d-flex justify-content-between align-items-center text-dark fw-semibold border-success" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                            <span id="txtDropdownAveria3">-- Seleccionar incidencia en motores/luces --</span>
+                            <i class="bi bi-chevron-down text-muted"></i>
+                        </div>
+                        <ul class="dropdown-menu w-100 shadow p-2 border-0 rounded-3" style="font-size: 0.78rem;">
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('motor', '⚙️ Motor zumba pero no arranca')">⚙️ Motor eléctrico o bomba zumba pero el eje no gira (Fallo condensador)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('led', '💡 Bombilla LED parpadea')">💡 Parpadeo intermitente o residual en luminarias LED (Flicker)</a></li>
+                            <li><a class="dropdown-item rounded py-2 mb-1 border-bottom" href="#" onclick="seleccionarAveriaPro('vehiculo electrico', '🚗 Incidencia en punto de carga VE')">🚗 Incidencia en punto de carga VE / Wallbox (ITC-BT-52)</a></li>
+                            <li><a class="dropdown-item rounded py-2" href="#" onclick="seleccionarAveriaPro('emergencia', '🚨 Fallo en alumbrado de emergencia')">🚨 Fallo en bloques autónomos de emergencia (ITC-BT-28)</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                    <span class="badge bg-secondary badge-quick p-2" onclick="cargarConsultaRapida('diferencial')">⚡ Diferencial</span>
+                    <span class="badge bg-secondary badge-quick p-2" onclick="cargarConsultaRapida('magnetotermico')">🔌 Térmico</span>
+                    <span class="badge bg-secondary badge-quick p-2" onclick="cargarConsultaRapida('quemado')">🔥 Quemado</span>
+                    <span class="badge bg-secondary badge-quick p-2" onclick="cargarConsultaRapida('motor')">⚙️ Motor</span>
+                    <span class="badge bg-secondary badge-quick p-2" onclick="cargarConsultaRapida('led')">💡 LED</span>
+                </div>
+
+                <div class="mb-2">
+                    <textarea class="form-control form-control-sm" id="userQuestion" rows="3" placeholder="Selecciona arriba en los selectores pro o escribe tu consulta técnica..."></textarea>
                 </div>
                 
                 <button type="button" class="btn btn-warning w-100 fw-bold btn-sm py-2 text-dark mb-3" onclick="consultarCopilotoUnificado()">
@@ -352,14 +487,14 @@
             </div>
         </section>
 
-        <!-- Sección Escáner con Reconocimiento Experto Realista -->
+        <!-- Sección Escáner -->
         <section id="sec-escaner" class="app-sec d-none">
             <div class="card shadow-sm border-0 p-3 text-center">
                 <div class="icon-box bg-success-subtle text-success mx-auto mb-2" style="width:40px; height:40px; font-size:1.1rem;">
                     <i class="bi bi-camera"></i>
                 </div>
                 <h6 class="fw-bold mb-1">Escáner de Cuadros (Diagnóstico Fiel)</h6>
-                <p class="small text-muted mb-2">Adjunta la imagen del cuadro y selecciona/revisa la composición real para no inventar protecciones no presentes.</p>
+                <p class="small text-muted mb-2">Adjunta la foto y marca los componentes reales presentes para evitar inventos.</p>
                 
                 <input type="file" class="form-control form-control-sm mb-2" accept="image/*" id="inputFotoCuadro">
                 
@@ -404,94 +539,205 @@
     <nav class="nav-bottom no-print">
         <div class="container max-w-md d-flex justify-content-around py-1">
             <a class="nav-link active" id="nav-presupuesto" onclick="switchSection('presupuesto')">
-                <i class="bi bi-calculator d-block"></i> Presupuesto
+                <i class="bi bi-calculator d-block"></i> <span data-i18n="menu_presupuesto">Presupuesto</span>
             </a>
             <a class="nav-link" id="nav-calculadora" onclick="switchSection('calculadora')">
-                <i class="bi bi-sliders d-block"></i> Cables
+                <i class="bi bi-sliders d-block"></i> <span data-i18n="menu_calculadora">Calculadora</span>
             </a>
             <a class="nav-link" id="nav-copiloto" onclick="switchSection('copiloto')">
-                <i class="bi bi-cpu d-block"></i> Copiloto
+                <i class="bi bi-cpu d-block"></i> <span data-i18n="menu_copiloto">Copiloto</span>
             </a>
             <a class="nav-link" id="nav-escaner" onclick="switchSection('escaner')">
-                <i class="bi bi-camera d-block"></i> Escáner
+                <i class="bi bi-camera d-block"></i> <span data-i18n="menu_escaner">Escáner</span>
             </a>
             <a class="nav-link" id="nav-historial" onclick="switchSection('historial')">
-                <i class="bi bi-folder2-open d-block"></i> Historial
+                <i class="bi bi-folder2-open d-block"></i> <span data-i18n="menu_historial">Historial</span>
             </a>
         </div>
     </nav>
 
-    <!-- LIBRERÍA TÉCNICA TOTAL DE AVERÍAS Y PRESUPUESTOS EDITABLES -->
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- MOTOR JAVASCRIPT MAESTRO Y BLINDADO -->
     <script>
-        // Registro PWA Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(() => {});
+        const traducciones = {
+            es: {
+                badge_rebt: "REBT Pro 2026 - Edición Única Campo",
+                subtitle: "Presupuestos Flash avec Selectores Pro, IVA B2B y Librería Total REBT.",
+                menu_presupuesto: "Presupuesto",
+                menu_calculadora: "Calculadora",
+                menu_copiloto: "Copiloto",
+                menu_escaner: "Escáner",
+                menu_historial: "Historial"
+            },
+            en: {
+                badge_rebt: "REBT Pro 2026 - Field Pro Edition",
+                subtitle: "Flash Quotes with Pro Selectors, B2B VAT & Total REBT Library.",
+                menu_presupuesto: "Quote",
+                menu_calculadora: "Calculator",
+                menu_copiloto: "Copilot",
+                menu_escaner: "Scanner",
+                menu_historial: "History"
+            },
+            fr: {
+                badge_rebt: "REBT Pro 2026 - Édition Terrain",
+                subtitle: "Devis Flash avec Menus Pro, TVA B2B & Bibliothèque REBT.",
+                menu_presupuesto: "Devis",
+                menu_calculadora: "Calculatrice",
+                menu_copiloto: "Copilote",
+                menu_escaner: "Scanner",
+                menu_historial: "Historique"
+            }
+        };
+
+        function cambiarIdioma(lang) {
+            localStorage.setItem('eb_idioma', lang);
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (traducciones[lang] && traducciones[lang][key]) {
+                    el.innerText = traducciones[lang][key];
+                }
             });
         }
 
         let historial = JSON.parse(localStorage.getItem('eb_historial_pro') || '[]');
         let listaMaterialesPresupuesto = [];
+        let ultimoTotalCalculado = "0.00 €";
+        let ultimoResumenTexto = "";
 
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('eb_idioma') || 'es';
+            const selectLang = document.getElementById('selectIdioma');
+            if(selectLang) selectLang.value = savedLang;
+            cambiarIdioma(savedLang);
+            initSignaturePad();
+        });
+
+        // Cambio de sección global blindado
         function switchSection(sec) {
             document.querySelectorAll('.app-sec').forEach(el => el.classList.add('d-none'));
             document.querySelectorAll('.card-menu').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-bottom .nav-link').forEach(el => el.classList.remove('active'));
             
-            document.getElementById('sec-' + sec).classList.remove('d-none');
-            document.getElementById('btn-' + sec)?.classList.add('active');
-            document.getElementById('nav-' + sec)?.classList.add('active');
+            const targetSec = document.getElementById('sec-' + sec);
+            if (targetSec) targetSec.classList.remove('d-none');
+
+            const targetCard = document.getElementById('card-' + sec);
+            if (targetCard) targetCard.classList.add('active');
+
+            const targetNav = document.getElementById('nav-' + sec);
+            if (targetNav) targetNav.classList.add('active');
 
             if(sec === 'historial') renderHistorial();
+            if(sec === 'presupuesto') {
+                setTimeout(initSignaturePad, 100);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Firma Digital
-        const canvas = document.getElementById('signature-pad');
-        const ctx = canvas.getContext('2d');
-        let painting = false;
+        // Configuración y eventos del Canvas de Firma Digital (Ratón y Táctil)
+        let canvas, ctx, painting = false;
 
-        function resizeCanvas() {
-            if(canvas) {
+        function initSignaturePad() {
+            canvas = document.getElementById('signature-pad');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            if(canvas.parentElement) {
                 canvas.width = canvas.parentElement.offsetWidth - 20;
                 canvas.height = 120;
             }
-        }
-        window.onload = resizeCanvas;
-        window.onresize = resizeCanvas;
 
-        if(canvas) {
+            canvas.onmousedown = null;
+            canvas.onmouseup = null;
+            canvas.onmousemove = null;
+
             canvas.addEventListener('mousedown', startPosition);
             canvas.addEventListener('mouseup', endPosition);
             canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('touchstart', (e) => { startPosition(e.touches[0]); e.preventDefault(); });
+
+            canvas.addEventListener('touchstart', (e) => {
+                if(e.touches.length > 0) startPosition(e.touches[0]);
+                e.preventDefault();
+            }, { passive: false });
+
             canvas.addEventListener('touchend', endPosition);
-            canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                if(e.touches.length > 0) draw(e.touches[0]);
+                e.preventDefault();
+            }, { passive: false });
         }
 
-        function startPosition(e) { painting = true; draw(e); }
-        function endPosition() { painting = false; ctx.beginPath(); }
+        window.onresize = () => { initSignaturePad(); };
+
+        function startPosition(e) { 
+            painting = true; 
+            draw(e); 
+        }
+
+        function endPosition() { 
+            painting = false; 
+            if(ctx) ctx.beginPath(); 
+        }
+
         function draw(e) {
-            if(!painting) return;
+            if(!painting || !ctx || !canvas) return;
             ctx.lineWidth = 2.5;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#0f172a';
+            
             const rect = canvas.getBoundingClientRect();
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            const clientX = e.clientX !== undefined ? e.clientX : e.pageX;
+            const clientY = e.clientY !== undefined ? e.clientY : e.pageY;
+
+            ctx.lineTo(clientX - rect.left, clientY - rect.top);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.moveTo(clientX - rect.left, clientY - rect.top);
         }
-        function limpiarFirma() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        // GENERADOR DE PRESUPUESTOS CON PARTIDAS EDITABLES Y BORRABLES
+        function limpiarFirma() { 
+            if(ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            } 
+        }
+
+        function seleccionarPartidaPro(valor, etiqueta) {
+            document.getElementById('solicitudUsuario').value = valor;
+            document.getElementById('txtDropdownPartida').innerHTML = `<i class="bi bi-check-circle-fill text-success me-1"></i> ${etiqueta}`;
+        }
+
+        function seleccionarCircuitoPro(valor, etiqueta) {
+            document.getElementById('txtDropdownCircuito').innerHTML = `<i class="bi bi-check-circle-fill text-success me-1"></i> ${etiqueta}`;
+            const parts = valor.split('|');
+            document.getElementById('calcPotencia').value = parts[0];
+            document.getElementById('calcLongitud').value = parts[1];
+            document.getElementById('calcTipoCircuito').value = parts[2];
+            calcularSeccionExacta();
+        }
+
+        function seleccionarAveriaPro(valor, etiqueta) {
+            document.getElementById('userQuestion').value = valor;
+            consultarCopilotoUnificado();
+        }
+
+        function cargarConsultaRapida(texto) {
+            document.getElementById('userQuestion').value = texto;
+            consultarCopilotoUnificado();
+        }
+
+        // GENERADOR DE PRESUPUESTOS CON EXTRACCIÓN DINÁMICA
         function generarPresupuestoProfesional() {
             const solicitud = document.getElementById('solicitudUsuario').value.trim();
-            const horas = parseFloat(document.getElementById('horasTrabajo').value) || 0;
-            const tarifa = parseFloat(document.getElementById('tarifaHora').value) || 40;
             const porcentajeIva = parseFloat(document.getElementById('porcentajeIva').value) || 21;
+            const tarifaHoraInput = parseFloat(document.getElementById('tarifaHora').value) || 40;
 
-            if(!solicitud) { alert('Por favor describe los materiales o el trabajo a realizar.'); return; }
+            if(!solicitud) { alert('Por favor describe o selecciona los materiales a presupuestar.'); return; }
 
+            ultimoResumenTexto = solicitud;
             document.getElementById('txtResumen').innerText = solicitud;
             document.getElementById('fechaEmision').innerText = new Date().toLocaleDateString('es-ES');
             document.getElementById('numPresupuesto').innerText = '#EB-' + Math.floor(10000 + Math.random() * 90000);
@@ -499,30 +745,41 @@
             listaMaterialesPresupuesto = [];
             const textLower = solicitud.toLowerCase();
 
-            if(textLower.includes("iga")) {
+            const matchNum = textLower.match(/(\d+)/);
+            let cantidadExtraida = matchNum ? parseInt(matchNum[1]) : 1;
+            let horasSugeridas = 2.0;
+
+            if (textLower.includes("enchufe") || textLower.includes("mecanismo") || textLower.includes("interruptor") || textLower.includes("toma")) {
+                let cantEnchufes = cantidadExtraida > 1 ? cantidadExtraida : 1;
+                listaMaterialesPresupuesto.push({ 
+                    concepto: 'Mecanismo Enchufe / Interruptor 16A UNE 20315 (PVP 2026)', 
+                    cant: cantEnchufes, 
+                    precio: 8.50 
+                });
+                horasSugeridas = Math.max(1.0, parseFloat((cantEnchufes * 0.25).toFixed(1)));
+            }
+            else if (textLower.includes("iga") || textLower.includes("kit completo") || textLower.includes("cuadro")) {
                 listaMaterialesPresupuesto.push({ concepto: 'Interruptor General Automático (IGA) 2P 40A Schneider/Hager', cant: 1, precio: 34.50 });
+                listaMaterialesPresupuesto.push({ concepto: 'Interruptor Diferencial 2P 40A 30mA Clase AC/A', cant: 1, precio: 38.90 });
+                listaMaterialesPresupuesto.push({ concepto: 'Magnetotérmicos Curva C UNE-EN 60898', cant: 5, precio: 8.50 });
+                listaMaterialesPresupuesto.push({ concepto: 'Protector sobretensiones transitorias/permanentes 2P', cant: 1, precio: 52.99 });
+                horasSugeridas = 3.5;
             }
-            if(textLower.includes("diferencial")) {
-                const cantDif = textLower.includes("2 diferencial") || textLower.includes("dos diferencial") ? 2 : 1;
-                listaMaterialesPresupuesto.push({ concepto: 'Interruptor Diferencial 2P 40A 30mA Clase AC/A', cant: cantDif, precio: 38.90 });
+            else if (textLower.includes("cable") || textLower.includes("rollo") || textLower.includes("tubo") || textLower.includes("metro")) {
+                let metros = cantidadExtraida > 1 ? cantidadExtraida : 50;
+                listaMaterialesPresupuesto.push({ concepto: 'Cable H07Z1-K Libre de Halógenos 2.5mm² / Tubo', cant: metros, precio: 0.95 });
+                horasSugeridas = 3.0;
             }
-            if(textLower.includes("magneto") || textLower.includes("automa")) {
-                listaMaterialesPresupuesto.push({ concepto: 'Magnetotérmicos Curva C UNE-EN 60898 (10A/16A/20A)', cant: 4, precio: 8.50 });
-            }
-            if(textLower.includes("sobretension")) {
-                listaMaterialesPresupuesto.push({ concepto: 'Protector contra Sobretensiones Transitorias y Permanentes 2P', cant: 1, precio: 52.99 });
-            }
-            if(textLower.includes("cable") || textLower.includes("rollo") || textLower.includes("m ")) {
-                listaMaterialesPresupuesto.push({ concepto: 'Cable H07Z1-K Libre de Halógenos (Metros/Rollo según especificación)', cant: 1, precio: 45.00 });
-            }
-
-            if(listaMaterialesPresupuesto.length === 0) {
-                listaMaterialesPresupuesto.push({ concepto: 'Suministro e instalación de material: ' + solicitud, cant: 1, precio: 65.00 });
+            else {
+                listaMaterialesPresupuesto.push({ concepto: 'Suministro de material: ' + solicitud, cant: cantidadExtraida, precio: 45.00 });
+                horasSugeridas = 2.0;
             }
 
-            renderTablaPresupuesto(horas, tarifa, porcentajeIva);
+            document.getElementById('horasTrabajo').value = horasSugeridas;
+            renderTablaPresupuesto(horasSugeridas, tarifaHoraInput, porcentajeIva);
             document.getElementById('resultado-presupuesto').classList.remove('d-none');
-            resizeCanvas();
+            
+            setTimeout(initSignaturePad, 50);
         }
 
         function renderTablaPresupuesto(horasParam, tarifaParam, porcentajeIvaParam) {
@@ -552,6 +809,8 @@
             const montoIva = subtotalGral * (porcentajeIva / 100);
             const totalFinal = subtotalGral + montoIva;
 
+            ultimoTotalCalculado = totalFinal.toFixed(2) + ' €';
+
             document.getElementById('filasMateriales').innerHTML = tablaHTML;
             document.getElementById('subtotalMat').innerText = subtotalMat.toFixed(2) + ' €';
             document.getElementById('horasTotales').innerText = horas;
@@ -559,7 +818,7 @@
             document.getElementById('subtotalMano').innerText = subtotalMano.toFixed(2) + ' €';
             document.getElementById('txtIva').innerText = porcentajeIva;
             document.getElementById('montoIva').innerText = montoIva.toFixed(2) + ' €';
-            document.getElementById('montoTotal').innerText = totalFinal.toFixed(2) + ' €';
+            document.getElementById('montoTotal').innerText = ultimoTotalCalculado;
         }
 
         function actualizarPartida(idx, campo, valor) {
@@ -577,6 +836,16 @@
         function agregarPartidaManual() {
             listaMaterialesPresupuesto.push({ concepto: 'Nueva partida / material', cant: 1, precio: 10.00 });
             renderTablaPresupuesto();
+        }
+
+        function copiarPresupuestoWhatsApp() {
+            const numP = document.getElementById('numPresupuesto').innerText;
+            const texto = `Hola, adjunto resumen del presupuesto eléctrico ${numP}:\n- Trabajo: ${ultimoResumenTexto}\n- TOTAL PVP: ${ultimoTotalCalculado}\n\nQuedo a tu disposición para su aprobación. ¡Un saludo!`;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('¡Presupuesto copiado al portapapeles! Ya puedes pegarlo en WhatsApp.');
+            }).catch(() => {
+                alert('Importe total: ' + ultimoTotalCalculado);
+            });
         }
 
         // CALCULADORA TÉCNICA DE SECCIONES REBT
@@ -607,117 +876,96 @@
             document.getElementById('resultadoCalculadora').classList.remove('d-none');
         }
 
-        // LIBRERÍA TOTAL DE AVERÍAS Y CONSULTAS DE CAMPO
+        // LIBRERÍA TOTAL DE AVERÍAS EXHAUSTIVA Y ROBUSTA
         function consultarCopilotoUnificado() {
             const pregunta = document.getElementById("userQuestion").value.trim().toLowerCase();
             const cajaRespuesta = document.getElementById("iaResponse");
             
             if (!pregunta) {
                 cajaRespuesta.classList.remove('d-none');
-                cajaRespuesta.innerHTML = "⚠️ Escribe cualquier síntoma de avería, cortocircuito, fallo de corriente o duda REBT.";
+                cajaRespuesta.innerHTML = "⚠️ Selecciona una avería de los selectores o escribe tu consulta.";
                 return;
             }
 
             cajaRespuesta.classList.remove('d-none');
-            cajaRespuesta.innerHTML = "⚡ Consultando la Librería Total de Averías...";
+            cajaRespuesta.innerHTML = "⚡ Consultando Librería Experta de Campo...";
 
-            let respuesta = "🛠️ **DIAGNÓSTICO TÉCNICO Y REPARACIÓN - LIBRERÍA DE CAMPO:**\n\n";
+            let respuesta = "🛠️ <strong>DIAGNÓSTICO TÉCNICO Y REPARACIÓN - LIBRERÍA DE CAMPO REBT:</strong><br><br>";
 
-            // 1. SALTO DE TERMICO / MAGNETOTÉRMICO (Cortocircuito o Sobrecarga)
-            if (pregunta.includes("termico") || pregunta.includes("magnetotermico") || pregunta.includes("salta el automatico") || pregunta.includes("disyuntor") || pregunta.includes("pia") || pregunta.includes("cortocircuito") || pregunta.includes("sobrecarga")) {
-                respuesta += "⚡ **SÍNTOMA: Salta el Magnetotérmico (PIA) o Interruptor General**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Cortocircuito:* Contacto directo entre fase y neutro (chispazo o marca negra en enchufe/aparato).\n" +
-                    "2. *Sobrecarga:* Demasiados aparatos conectados simultáneamente superando el amperaje nominal del PIA (ej: estufa + microondas en PIA de 16A).\n" +
-                    "3. *Magnetotérmico defectuoso o fatiga térmica.*\n\n" +
-                    "• **Normativa REBT:** ITC-BT-22 (Protección contra sobreintensidades).\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- Desenchufar todos los aparatos de la línea afectada y rearmar el térmico.\n" +
-                    "- Medir continuidad con polímetro para descartar cortocircuito franco en cables o bornas.\n" +
-                    "- Comprobar consumo real con pinza amperimétrica.";
+            if (pregunta.includes("diferencial") || pregunta.includes("humedad") || pregunta.includes("deriva")) {
+                respuesta += "⚡ <strong>INCIDENCIA: Salto intempestivo de Interruptor Diferencial</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Derivación a tierra por humedad en resistencias (termo, lavadora), filtraciones en cajas de registro o acumulación de corrientes de fuga capacitivas en equipos electrónicos.<br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-24 (Protección contra contactos indirectos).<br>" +
+                    "• <strong>Reparación:</strong> Aislar circuitos bajando magnetotérmicos uno a uno. Medir aislamiento con megóhmetro y sustituir por diferencial Superinmunizado (Clase A o SI) si hay electrónica sensible.";
             }
-            // 2. SALTO DE DIFERENCIAL (Fugas a tierra, humedad)
-            else if (pregunta.includes("diferencial") || pregunta.includes("salta") || pregunta.includes("dispara") || pregunta.includes("humedad") || pregunta.includes("llueve") || pregunta.includes("derivacion")) {
-                respuesta += "⚡ **SÍNTOMA: Disparo intempestivo o salto de Interruptor Diferencial**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Derivación a tierra por humedad:* Entradas de agua en cajas de registro, exterior, o resistencia de termo eléctrico / lavadora comunicada con tierra.\n" +
-                    "2. *Acumulación de fugas de alta frecuencia:* Múltiples fuentes conmutadas (ordenadores, LEDs, inversores) suman corrientes de fuga permanentes que rozan los 30mA.\n\n" +
-                    "• **Normativa REBT:** ITC-BT-24 (Protección contra contactos indirectos).\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- Desconectar circuitos secundarios bajando magnetotérmicos para aislar qué línea provoca la fuga.\n" +
-                    "- Medir aislamiento fase/neutro a tierra con megóhmetro.\n" +
-                    "- Sustituir diferencial estándar por **Diferencial Superinmunizado (Clase A o SI)** si el problema son armónicos o transitorios.";
+            else if (pregunta.includes("magnetotermico") || pregunta.includes("termico") || pregunta.includes("automatico") || pregunta.includes("pia") || pregunta.includes("corto") || pregunta.includes("sobrecarga")) {
+                respuesta += "🔌 <strong>INCIDENCIA: Salto de Magnetotérmico (PIA) o Térmico</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Cortocircuito franco (contacto directo fase-neutro) o sobrecarga prolongada por superar el amperaje nominal del PIA.<br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-22 (Protección contra sobreintensidades).<br>" +
+                    "• <strong>Reparación:</strong> Desenchufar aparatos conectados a la línea, verificar continuidad con multímetro y comprobar consumo real con pinza amperimétrica.";
             }
-            // 3. SIN LUZ / CORRIENTE EN ENCHUFES O HABITACIÓN
-            else if (pregunta.includes("sin luz") || pregunta.includes("sin corriente") || pregunta.includes("no va") || pregunta.includes("no funciona") || pregunta.includes("enchufe") || pregunta.includes("apagado")) {
-                respuesta += "🔌 **SÍNTOMA: Falta de corriente eléctrica en toma o estancia**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Borne flojo o quemado* en caja de derivación intermedia.\n" +
-                    "2. *Magnetotérmico abierto o desarmado* (o cable suelto en su borne de salida).\n" +
-                    "3. *Puente interrumpido* en mecanismo de enchufe o caja de registro.\n\n" +
-                    "• **Normativa REBT:** ITC-BT-25 / ITC-BT-19.\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- Verificar con destornillador buscafolios o multímetro si hay tensión a la entrada y salida del magnetotérmico.\n" +
-                    "- Abrir mecanismos y cajas de registro para revisar continuidad y apretar tornillos de bornas con destornillador.";
+            else if (pregunta.includes("quemado") || pregunta.includes("chispas") || pregunta.includes("calientes") || pregunta.includes("olor") || pregunta.includes("humo")) {
+                respuesta += "🔥 <strong>INCIDENCIA: Olor a quemado, chispas o bornas calientes</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Falso contacto o borne flojo que genera resistencia elevada y efecto Joule (sobrecalentamiento destructivo).<br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-19.<br>" +
+                    "• <strong>Reparación:</strong> <strong>Cortar suministro general (IGA) inmediatamente.</strong> Seccionar cableado deteriorado, limpiar bornas y re-crimpar con apriete firme.";
             }
-            // 4. OLOR A QUEMADO / CHISPAS / CALOR
-            else if (pregunta.includes("quemado") || pregunta.includes("olor") || pregunta.includes("chispas") || pregunta.includes("caliente") || pregunta.includes("humo") || pregunta.includes("chispa")) {
-                respuesta += "🔥 **SÍNTOMA: Olor a quemado, chispas o calor excesivo en envolvente/mecanismos**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Falso contacto o borne flojo* que provoca alta resistencia eléctrica y efecto Joule (sobrecalentamiento).\n" +
-                    "2. *Sección de cable insuficiente* para la carga conectada.\n\n" +
-                    "• **Normativa REBT:** ITC-BT-19.\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- **Cortar suministro general (IGA) de inmediato.**\n" +
-                    "- Inspeccionar visualmente bornas, regletas y automáticos buscando marcas negras o aislamiento fundido.\n" +
-                    "- Cortar tramo de cable dañado, limpiar puntas y re-crimpar o conectar firmemente en borna limpia.";
+            else if (pregunta.includes("sobretensiones") || pregunta.includes("transitorias")) {
+                respuesta += "🛡️ <strong>INCIDENCIA: Ausencia o fallo de protección contra sobretensiones</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-23 (Obligatorio en CGMP según esquema general y CCAA).<br>" +
+                    "• <strong>Reparación:</strong> Instalar protector contra sobretensiones transitorias (varistores) y permanentes (bobina de disparo) aguas abajo del IGA.";
             }
-            // 5. MOTOR O BOMBA ZUMBA / NO ARRANCA
-            else if (pregunta.includes("motor") || pregunta.includes("bomba") || pregunta.includes("zumba") || pregunta.includes("compresor") || pregunta.includes("depuradora") || pregunta.includes("arranca")) {
-                respuesta += "⚙️ **SÍNTOMA: Motor eléctrico o bomba zumba pero el eje no gira**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Condensador de arranque/permanente perforado o sin capacidad.*\n" +
-                    "2. *Bloqueo mecánico* en rodamiento o impulsor de la bomba (cal u óxido).\n" +
-                    "3. *Falta de una fase* en motores trifásicos (efecto marcha en monofasica / desequilibrio).\n\n" +
-                    "• **Normativa REBT:** ITC-BT-47.\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- Comprobar con destornillador que el eje gira libremente de forma manual.\n" +
-                    "- Medir capacidad del condensador con capacímetro o sustituir por uno de idénticos microfaradios (µF).\n" +
-                    "- En trifásicos, comprobar tensión en las tres fases.";
+            else if (pregunta.includes("sin corriente") || pregunta.includes("toma") || pregunta.includes("luz") || pregunta.includes("enchufe")) {
+                respuesta += "🔌 <strong>INCIDENCIA: Falta de corriente eléctrica en toma o estancia</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Borne suelto en caja de registro intermedia, cable cortado o PIA defectuoso.<br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-25 / ITC-BT-19.<br>" +
+                    "• <strong>Reparación:</strong> Verificar tensión a la entrada y salida de protecciones con multímetro y repasar cajas de derivación.";
             }
-            // 6. ILUMINACIÓN LED / PARPADEO
-            else if (pregunta.includes("parpadea") || pregunta.includes("luz") || pregunta.includes("bombilla") || pregunta.includes("led") || pregunta.includes("titila") || pregunta.includes("flicker")) {
-                respuesta += "💡 **SÍNTOMA: Parpadeo intermitente o parpadeo residual en luces LED**\n\n" +
-                    "• **Causas Raíz Probables:**\n" +
-                    "1. *Corriente capacitiva inducida* por cables paralelos en el mismo tubo.\n" +
-                    "2. *Driver LED defectuoso* o incompatibilidad con reguladores (dimmer) antiguos.\n" +
-                    "3. *Interruptor con piloto luminoso incorporado.*\n\n" +
-                    "• **Normativa REBT:** ITC-BT-44.\n\n" +
-                    "• **Protocolo de Reparación / Comprobación:**\n" +
-                    "- Instalar un condensador antiparpadeo (bypass) en paralelo con la luminaria LED.\n" +
-                    "- Sustituir interruptores con piloto por modelos estándar.";
+            else if (pregunta.includes("caida") || pregunta.includes("tension") || pregunta.includes("alejada")) {
+                respuesta += "📉 <strong>INCIDENCIA: Caída de tensión excesiva en línea alejada</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-19 (Límites máximos: 3% alumbrado, 5% fuerza).<br>" +
+                    "• <strong>Reparación:</strong> Aumentar la sección del conductor de cobre (pasar de 2.5mm² a 4mm² o 6mm²) para reducir la resistencia óhmica de la línea.";
             }
-            // 7. CONSULTAS DE SECCIÓN Y LÍNEAS REBT
-            else if (pregunta.includes("linea") || pregunta.includes("seccion") || pregunta.includes("cable") || pregunta.includes("2,5") || pregunta.includes("2.5") || pregunta.includes("1,5") || pregunta.includes("4 mm") || pregunta.includes("6 mm") || pregunta.includes("necesito") || pregunta.includes("cuanto")) {
-                respuesta += "• **Dimensionamiento de Líneas y Protecciones (ITC-BT-19 / ITC-BT-25):**\n" +
-                    "1. **Relación Sección / Magnetotérmico / Diferencial:**\n" +
-                    "   - **Sección 1.5 mm²:** Protegida por magnetotérmico de máximo **10A** (Circuitos de iluminación C1).\n" +
-                    "   - **Sección 2.5 mm²:** Protegida por magnetotérmico de máximo **16A** (Circuitos de enchufes generales C2). El diferencial asociado debe ser de **25A o 40A** (30mA).\n" +
-                    "   - **Sección 4 mm² / 6 mm²:** Protegidas por magnetotérmicos de **20A / 25A / 32A** (Lavadora, Vitrocerámica, Termo, A.A.).\n" +
-                    "2. **Normativa REBT:** $I_z \\ge I_n$ (La capacidad del conductor debe superar el calibre de protección).";
+            else if (pregunta.includes("tierra") || pregunta.includes("continuidad") || pregunta.includes("telurometro")) {
+                respuesta += "🌍 <strong>INCIDENCIA: Falta de continuidad o resistencia alta en toma de tierra</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-18.<br>" +
+                    "• <strong>Reparación:</strong> Medir resistencia de tierra con telurómetro y revisar pica o borne principal de tierra en cuadro general.";
             }
-            // CONSULTA GENERAL / RESTO
+            else if (pregunta.includes("seccion") || pregunta.includes("cable") || pregunta.includes("mm2")) {
+                respuesta += "📏 <strong>INCIDENCIA: Sección de cable insuficiente para la carga</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-19.<br>" +
+                    "• <strong>Reparación:</strong> Sustituir canalización y conductores por la sección normalizada adecuada a la potencia demandada.";
+            }
+            else if (pregunta.includes("motor") || pregunta.includes("bomba") || pregunta.includes("zumba") || pregunta.includes("condensador")) {
+                respuesta += "⚙️ <strong>INCIDENCIA: Motor eléctrico o bomba zumba pero no gira</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Condensador de arranque/permanente perforado o sin capacidad; bloqueo mecánico en rodamiento o impulsor.<br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-47.<br>" +
+                    "• <strong>Reparación:</strong> Comprobar giro libre manual del eje y sustituir condensador de arranque por idénticos microfaradios (µF).";
+            }
+            else if (pregunta.includes("led") || pregunta.includes("parpadea") || pregunta.includes("flicker") || pregunta.includes("bombilla")) {
+                respuesta += "💡 <strong>INCIDENCIA: Parpadeo o parpadeo residual en luminarias LED (Flicker)</strong><br><br>" +
+                    "• <strong>Causas Raíz:</strong> Corriente capacitiva inducida en cableado paralelo o driver LED de baja calidad.<br>" +
+                    "• <strong>Reparación:</strong> Instalar condensador antiparpadeo (bypass) en paralelo con la luminaria o sustituir interruptores con piloto luminoso.";
+            }
+            else if (pregunta.includes("vehiculo") || pregunta.includes("coche") || pregunta.includes("wallbox") || pregunta.includes("ve")) {
+                respuesta += "🚗 <strong>INCIDENCIA: Instalación y protecciones para Punto de Carga VE</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-52.<br>" +
+                    "• <strong>Reparación:</strong> Línea dedicada con protección diferencial tipo B o A según envolvente y calibre adecuado.";
+            }
+            else if (pregunta.includes("emergencia") || pregunta.includes("bateria")) {
+                respuesta += "🚨 <strong>INCIDENCIA: Alumbrado de emergencia</strong><br><br>" +
+                    "• <strong>Normativa REBT:</strong> ITC-BT-28.<br>" +
+                    "• <strong>Reparación:</strong> Comprobar estado de baterías acumuladoras y autonomía mínima reglamentaria (1 hora).";
+            }
             else {
-                respuesta += `• **Consulta Analizada:** "${pregunta}"\n\n` +
-                    "**Dictamen Técnico REBT de Campo:**\n" +
-                    "1. Asegure siempre el corte efectivo de alimentación antes de manipular bornas o conductores.\n" +
-                    "2. Realice comprobaciones con polímetro (voltaje, continuidad y aislamiento) para certificar el origen del fallo antes de proceder a la sustitución de elementos.";
+                respuesta += `• <strong>Consulta Analizada:</strong> "${pregunta}"<br><br>` +
+                    "<strong>Dictamen Técnico REBT:</strong> Asegure el corte efectivo de alimentación antes de manipular bornas y compruebe voltajes, aislamiento y continuidad con instrumentos homologados.";
             }
 
             cajaRespuesta.innerHTML = respuesta;
         }
 
-        // ESCÁNER EXPERTO DE CUADROS (FIDELIDAD REAL SIN INVENTAR SOBRETENSIONES)
+        // ESCÁNER EXPERTO DE CUADROS
         function analizarCuadroFotoExperto() {
             const input = document.getElementById('inputFotoCuadro');
             const res = document.getElementById('resultadoEscanner');
@@ -732,24 +980,21 @@
             const tieneSobre = document.getElementById('checkSobretensiones').checked;
             const tieneTierra = document.getElementById('checkTierra').checked;
 
-            let invHTML = "🔍 **Diagnóstico Visual de Cuadro Eléctrico Real:**<br><br>📋 **Aparamenta Detectada en Fotografía:**<br>";
+            let invHTML = "🔍 <strong>Diagnóstico Visual de Cuadro Eléctrico Real:</strong><br><br>📋 <strong>Aparamenta Detectada:</strong><br>";
             
-            if(tieneIGA) invHTML += "• **IGA / General:** Presente (Verificar calibre nominal en rotulación).<br>";
-            if(tieneDif) invHTML += "• **Interruptor Diferencial:** Presente (Sensibilidad estándar 30mA).<br>";
+            if(tieneIGA) invHTML += "• <strong>IGA / General:</strong> Presente.<br>";
+            if(tieneDif) invHTML += "• <strong>Interruptor Diferencial:</strong> Presente (30mA).<br>";
             
             if(tieneSobre) {
-                invHTML += "• **Protección Sobretensiones:** Presente (Modulo protector permanente/transitorio).<br>";
+                invHTML += "• <strong>Protección Sobretensiones:</strong> Presente.<br>";
             } else {
-                invHTML += "• **Protección Sobretensiones:** ❌ *NO PRESENTE* en el cuadro (Recomendado según ITC-BT-23 / Normativa Autonómica).<br>";
+                invHTML += "• <strong>Protección Sobretensiones:</strong> ❌ <em>NO PRESENTE</em> (Recomendado según ITC-BT-23).<br>";
             }
 
-            invHTML += "• **Magnetotérmicos (PIAs):** Se observan líneas de distribución terminal.<br>";
-            
-            if(tieneTierra) {
-                invHTML += "• **Toma de Tierra:** Conexión de conductores de protección verde-amarillo visible.<br>";
-            }
+            invHTML += "• <strong>Magnetotérmicos (PIAs):</strong> Líneas terminales operativas.<br>";
+            if(tieneTierra) invHTML += "• <strong>Toma de Tierra:</strong> Conductor verde-amarillo visible.<br>";
 
-            invHTML += "<br>✅ **Dictamen REBT de Campo:** Cuadro verificado. No se detectan inventos de aparamenta no presente. Se recomienda revisar apriete de bornes.";
+            invHTML += "<br>✅ <strong>Dictamen REBT de Campo:</strong> Cuadro verificado sin inventos. Se recomienda revisar apriete de bornes.";
 
             res.classList.remove('d-none');
             res.innerHTML = invHTML;
@@ -763,7 +1008,7 @@
 
             historial.push({ id, solicitud, total, fecha });
             localStorage.setItem('eb_historial_pro', JSON.stringify(historial));
-            alert('Presupuesto ' + id + ' guardado en el historial local con éxito.');
+            alert('Presupuesto ' + id + ' guardado en el historial con éxito.');
         }
 
         function renderHistorial() {
@@ -788,10 +1033,12 @@
         }
 
         function prepararImpresionPDF() {
-            const dataURL = canvas.toDataURL();
-            document.getElementById('imgFirma').src = dataURL;
-            document.getElementById('signature-pad').style.display = 'none';
-            document.getElementById('firma-impresa').classList.remove('d-none');
+            const dataURL = canvas ? canvas.toDataURL() : '';
+            if (dataURL) {
+                document.getElementById('imgFirma').src = dataURL;
+                document.getElementById('signature-pad').style.display = 'none';
+                document.getElementById('firma-impresa').classList.remove('d-none');
+            }
             window.print();
         }
     </script>

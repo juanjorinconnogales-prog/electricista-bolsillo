@@ -1,0 +1,22 @@
+{
+  "Electricista_V610_debug_sin_pesos.apk": {
+    "bytes": 107833661,
+    "sha256": "7156d52ad2d4aa05783d002e32efe182e38e5ae8d2e4cd9cc53497f6f1ad0be8"
+  },
+  "Electricista_V610.html": {
+    "bytes": 3041012,
+    "sha256": "5b97db5218b047dca36105eaae0868fb4ef63edb2235afc1af2699ccd2a7dc06"
+  },
+  "Electricista_V610_AndroidStudio.zip": {
+    "bytes": 5490873,
+    "sha256": "2393b27ddce0e309364b2873f5afe052b8911c3607c120be20a8c29301a7ae03"
+  },
+  "Informe_pruebas_V610.md": {
+    "bytes": 17182,
+    "sha256": "42057bd103d7c6b9f29b8ea3f8d7cbb0b25c4b673b4d48916350e8a3ce426b65"
+  },
+  "Evidencias_V610.zip": {
+    "bytes": 1276730,
+    "sha256": "11e266667ccad94e0547b85841a9d92d7a1ba7c3b6672780c14a1c5e57694883"
+  }
+}

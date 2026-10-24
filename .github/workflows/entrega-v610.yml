@@ -1,0 +1,29 @@
+name: Entrega descargable V6.10 (repositorio publico)
+on:
+  push:
+    branches: [entrega-v610-20261024]
+    paths:
+      - 'entregas/v6.10/**'
+      - '.github/workflows/entrega-v610.yml'
+permissions:
+  contents: write
+jobs:
+  publicar:
+    if: github.repository == 'juanjorinconnogales-prog/electricista-bolsillo' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruir archivos originales y verificar SHA256
+        run: python entregas/v6.10/preparar_descargas.py --out "$RUNNER_TEMP/descargas-v610"
+      - name: Publicar archivos verificados como prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: v6.10-entrega-verificada-20261024
+        run: |
+          set -eu
+          gh release create "$RELEASE_TAG" "$RUNNER_TEMP/descargas-v610/"* \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "Electricista V6.10 — entrega verificada sin pesos neuronales" \
+            --notes-file entregas/v6.10/NOTAS_RELEASE.md --prerelease --draft
+          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --draft=false
